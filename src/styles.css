@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@300;400&family=Silkscreen&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Lato:wght@400;700&family=Poppins:wght@300;400&family=Silkscreen&display=swap');
+
+
 * {
     padding: 0;
     margin: 0;
@@ -7,23 +11,42 @@
 body {
     background-color: #1c1c1c;
     color: white;
-
+    background-image: url(img/fundo.jpg);
+    backdrop-filter: blur(5px);
+    background-position: center;
+    background-repeat: no-repeat;
 
 }
 
 #app {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
 }
 
+h1{
+    font-weight: bold;
+    /* font-family: 'Silkscreen', sans-serif; */
+    font-family: 'Cinzel', serif;
+    color: white;
+    font-size: 50px;
+    text-align: center;
+    background: linear-gradient(rgba(255, 0, 0, 0.5), rgba(255, 255, 0, 0.336));
+    margin-bottom: 10px;
+    backdrop-filter: blur(2px);
+    padding: 5px;
+   
+    width: 100%;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-template-rows: repeat(7, 1fr);
-    gap: 5px;
+    gap: 2px;
 
     width: 300px;
     height: 300px;
@@ -41,11 +64,10 @@ body {
     height: 45px;
     text-align: center;
 
-    font-size: 16px;
-    background-color: #3f6e8d;
-    /* border: 1px solid #2980b9; */
-    /* box-sizing: border-box; */
-    border-radius: 10px;
+    font-size:25px;
+    background-color: #f8f7f754;
+    backdrop-filter: blur(0.5s);
+    border-radius: 7px;
 
     &:hover {
         cursor: pointer;
@@ -54,22 +76,19 @@ body {
 }
 
 .selecionado {
-    /* background-color: orange; */
-    transition: 0.5s;
-    animation: explode alternate-reverse 0.5s;
+     transition: 0.5s;
+    animation: explode alternate-reverse 0.5s ease-in-out;
 }
 
 .clicado {
-    /* background-color: black; */
-    /* filter: contrast(150%);
-     */
      background-color: orange;
 }
 
 @keyframes explode {
     to {
+       rotate: -360deg;
        translate: 0 -100px;
-       opacity: 0%;
+       opacity: 0.5;
        background-color: orange;
     }
 }

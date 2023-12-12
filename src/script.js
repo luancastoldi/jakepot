@@ -2,8 +2,7 @@ let contador = 1
 document.querySelectorAll('.grid-item').forEach(element => {
 
 
-
-    let numeroSorteado = Math.floor(Math.random() * 2) + 1
+    let numeroSorteado = geraNumeroAleatorio();
     element.textContent = numeroSorteado
     element.id = contador
 
@@ -14,48 +13,91 @@ document.querySelectorAll('.grid-item').forEach(element => {
     let rightValue = parseInt(element.id) + 1
 
 
+    const direcoes = {
+        cima: upValue,
+        baixo: downValue,
+        esqueda: leftValue,
+        direita: rightValue,
+    }
+
     element.addEventListener('click', (evt) => {
 
+        let numeroTela = evt.target.textContent;
+        let valor = parseInt(element.id)
+        let acertou = false;
+        let pontos = 0;
+
+        if (document.getElementById(upValue)) {
+            let id = parseInt(evt.target.id) - 7
+            while (document.getElementById(id) && document.getElementById(id).textContent == numeroTela) {
+                trocaNumeroEncontrado(id)
+                id = id - 7;
+                acertou = true;
+                pontos = pontos + 1;
+            }
+        }
+
+
+        if (document.getElementById(downValue)) {
+            let id = parseInt(evt.target.id) + 7
+            while (document.getElementById(id) && document.getElementById(id).textContent == numeroTela) {
+                trocaNumeroEncontrado(id)
+                id = id + 7;
+                acertou = true;
+                pontos = pontos + 1;
+            }
+        }
+
+
+        if (document.getElementById(leftValue)) {
+            let id = parseInt(evt.target.id) - 1
+            let aux = valor;
+            while ((document.getElementById(id)) && (document.getElementById(id).textContent == numeroTela) && (aux % 7 != 1)) {
+                trocaNumeroEncontrado(id)
+                aux = aux - 1;
+                id = id - 1;
+                acertou = true;
+                pontos = pontos + 1;
+            }
+        }
+
+
+        if (document.getElementById(rightValue)) {
+            let id = parseInt(evt.target.id) + 1
+            let aux = valor;
+            while (document.getElementById(id) && document.getElementById(id).textContent == numeroTela && aux % 7 != 0) {
+                trocaNumeroEncontrado(id)
+                aux = aux + 1;
+                id = id + 1;
+                acertou = true;
+                pontos = pontos + 1;
+            }
+        }
+
+
+        if (acertou == true) {
+            trocaNumeroEncontrado(valor)
+            pontos = pontos + 1;
+        }
+
+        if(pontos != 0){
+            document.querySelector('h1').textContent = pontos + 'x COMBO'
+        }else{
+            document.querySelector('h1').textContent = "NADA"
+        }
+      
 
         evt.target.classList.add('clicado')
 
-        console.log(evt.target.id);
-        console.log(upValue);
-
-        if (document.getElementById(upValue) && numeroSorteado == parseInt(document.getElementById(upValue).textContent)) {
-            let id = parseInt(evt.target.id) - 7
-            trocaNumeroEncontrado(id)
-        }
-
-        if (document.getElementById(downValue) && numeroSorteado == parseInt(document.getElementById(downValue).textContent)) {
-            let id = parseInt(evt.target.id) + 7
-            trocaNumeroEncontrado(id)
-        }
-
-
-        if (document.getElementById(leftValue) && (numeroSorteado == parseInt(document.getElementById(leftValue).textContent)) ) {
-            // && (parseInt((evt.target.id) - 1) % 7 != 0)
-            // && (parseInt((evt.target.id) - 1) % 7 != 0)
-            let id = parseInt(evt.target.id) - 1
-            trocaNumeroEncontrado(id)
-        }
-
-        if (document.getElementById(rightValue) && (numeroSorteado == parseInt(document.getElementById(rightValue).textContent)) && (parseInt(evt.target.id) % 7 != 0)) {
-            // 
-            console.log('Direita');
-            let id = parseInt(evt.target.id) + 1
-            trocaNumeroEncontrado(id)
-        }
+        // console.log(direcoes);
 
         setTimeout(() => {
-
             document.querySelectorAll('.grid-item').forEach(element => {
                 element.classList.remove('selecionado')
                 element.classList.remove('clicado')
             })
-    
-        }, 500);
-    
+        }, 400);
+
     })
 
     contador++;
@@ -63,12 +105,12 @@ document.querySelectorAll('.grid-item').forEach(element => {
 
 
 function trocaNumeroEncontrado(id) {
-    // console.log('bingo');
-    let random = Math.floor(Math.random() * 2) + 1
     document.getElementById(id).classList.add('selecionado')
-    document.getElementById(id).textContent = random
+    document.getElementById(id).textContent = geraNumeroAleatorio();
+}
 
 
-    //    let random2 = Math.floor(Math.random() * 2) + 1
-    //    document.getElementsByClassName('clicado')[0].textContent = random2
+function geraNumeroAleatorio() {
+    const emojisFrutas = ["🍒", "🍋", "🍉"];
+    return emojisFrutas[Math.floor(Math.random() * emojisFrutas.length)];
 }
